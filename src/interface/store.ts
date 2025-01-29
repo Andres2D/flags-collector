@@ -3,5 +3,20 @@ export interface RootState {
 }
 
 export interface GameState {
-  test: string;
+  gameMode: GameMode;
+  currentLevel: number;
+  currentQuestion: string;
+  currentOptions: string[];
+  correctAnswer: string;
+  score: {
+    correct: number;
+    wrong: number;
+  }
 }
+
+export type GameMode = 
+'guessByName' | 
+'guessByFlag' |
+'colorTheFlag' |
+'guessByMap' |
+'random';
