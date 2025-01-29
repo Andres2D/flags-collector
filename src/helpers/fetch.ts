@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useCallback, useState } from 'react';
+import { getUniqueRandom } from './random';
 
 const API_URL = 'https://restcountries.com/v3.1';
 
@@ -36,8 +37,14 @@ const useRequest = () => {
 };
 
 const mapApiResults = (results: any[]) => {
-  const answerCountry: any = results[0];
-  const otherCountries = [results[9],results[6],results[2], answerCountry];
+  const randomPositions = getUniqueRandom(4, results.length);
+  const answerCountry = results[randomPositions[0]];
+  const otherCountries = [
+    results[randomPositions[0]],
+    results[randomPositions[1]], 
+    results[randomPositions[2]], 
+    results[randomPositions[3]]
+  ];
 
   return {
     answer: {
