@@ -1,8 +1,8 @@
 import { CaseReducer, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GameMode, GameState } from "../interface/store";
+import { FetchGame, GameMode, GameState } from "../interface/store";
 
 const initialState: GameState = {
-  gameMode: 'guessByFlag',
+  gameMode: 'guessByName',
   currentLevel: 0,
   currentQuestion: '',
   currentOptions: [],
@@ -18,15 +18,15 @@ const setStartGame: CaseReducer<GameState, PayloadAction<GameMode>> =
   state.gameMode = action.payload;
 }
 
-const nextQuestion: CaseReducer<GameState, PayloadAction<string>> = 
-(state: GameState, action: PayloadAction<string>) => {
-  const answer = action.payload;
+const nextQuestion: CaseReducer<GameState, PayloadAction<FetchGame>> = 
+(state: GameState, action: PayloadAction<FetchGame>) => {
+  const { answer, wrongAnswers } = action.payload;
 
-  answer === state.correctAnswer ? state.score.correct++ : state.score.wrong++;
+  // answer === state.correctAnswer ? state.score.correct++ : state.score.wrong++;
   state.currentLevel = state.currentLevel++;
-  state.currentQuestion = 'Define';
-  state.correctAnswer = 'Test';
-  state.currentOptions = ['A', 'B', 'C', 'D'];
+  state.currentQuestion = state.gameMode === 'guessByFlag' ? answer.name : answer.flag;
+  state.correctAnswer = answer.name;
+  state.currentOptions = wrongAnswers;
 }
 
 const gameSlice = createSlice({

@@ -6,7 +6,7 @@ export interface GameState {
   gameMode: GameMode;
   currentLevel: number;
   currentQuestion: string;
-  currentOptions: string[];
+  currentOptions: {flag: string; name: string}[];
   correctAnswer: string;
   score: {
     correct: number;
@@ -20,3 +20,13 @@ export type GameMode =
 'colorTheFlag' |
 'guessByMap' |
 'random';
+
+export interface FetchGame {
+  answer: OptionFlag,
+  wrongAnswers: OptionFlag[]
+}
+
+interface OptionFlag {
+  name: string;
+  flag: string;
+}
