@@ -10,7 +10,7 @@ const Game = () => {
   const dispatch = useDispatch();
 
   const dispatchTest = (data: FetchGame) => {
-    dispatch(gameActions.nextQuestion(data))
+    dispatch(gameActions.nextQuestion(data));
   }
 
   const sendRequestHandler = () => {
@@ -25,9 +25,14 @@ const Game = () => {
     )
   );
 
+  const handleGameStart = () => {
+    dispatch(gameActions.setStartGame('guessByName'));
+    sendRequestHandler();
+  }
+
   return (
     <section>
-      <button>Start game</button>
+      <button onClick={handleGameStart}>Start game</button>
       <br />
       <br />
       <br />

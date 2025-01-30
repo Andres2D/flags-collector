@@ -46,12 +46,14 @@ const mapApiResults = (results: any[]) => {
     results[randomPositions[3]]
   ];
 
+  const scrambledArray = scrambleArray(otherCountries);
+
   return {
     answer: {
       name: answerCountry?.name?.common,  
       flag: answerCountry?.flags?.png
     },
-    wrongAnswers: otherCountries.map(country => {
+    wrongAnswers: scrambledArray.map(country => {
       return {
         name: country?.name?.common,
         flag: country?.flags?.png
@@ -59,5 +61,16 @@ const mapApiResults = (results: any[]) => {
     })
   }
 }
+
+export const scrambleArray = (array: any[]) => {
+  let currentIndex = array.length, randomIndex;
+  while(currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+  }
+  return array;
+};
 
 export default useRequest;

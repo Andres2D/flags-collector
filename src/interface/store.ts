@@ -8,6 +8,7 @@ export interface GameState {
   currentQuestion: string;
   currentOptions: {flag: string; name: string}[];
   correctAnswer: string;
+  answerSelected: string;
   score: {
     correct: number;
     wrong: number;
