@@ -17,10 +17,20 @@ const Game = () => {
     sendRequest('europe', dispatchTest);
   }
 
+  const handleOptionSelected = (option: string) => {
+    dispatch(gameActions.selectAnswer(option));
+  }
+
   const answersMap = game.currentOptions.map(({ flag, name }) => 
     (
       <li key={name}>
-        <img width="100px" src={flag} />
+        <img 
+          onClick={() => handleOptionSelected(name)}
+          width="100px" 
+          height="70px"
+          src={flag} 
+          style={{ border: '2px solid black', cursor: 'pointer', borderColor: game.answerSelected === name ? 'red' : 'black' }} 
+        />
       </li>
     )
   );
