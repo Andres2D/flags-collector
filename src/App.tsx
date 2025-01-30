@@ -11,7 +11,7 @@ function App() {
       <Route path='guess-by-name' element={<Game />}></Route>
       <Route path='game-over' element={<GameOver />}></Route>
     </Routes>
-  ) 
+  );
 }
 
 export default App;
