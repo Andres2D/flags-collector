@@ -1,12 +1,13 @@
 import { CaseReducer, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GameMode, GameState } from "../interface/store";
+import { FetchGame, GameMode, GameState } from "../interface/store";
 
 const initialState: GameState = {
-  gameMode: 'guessByFlag',
+  gameMode: 'guessByName',
   currentLevel: 0,
   currentQuestion: '',
   currentOptions: [],
   correctAnswer: '',
+  answerSelected: '',
   score: {
     correct: 0,
     wrong: 0
@@ -15,18 +16,35 @@ const initialState: GameState = {
 
 const setStartGame: CaseReducer<GameState, PayloadAction<GameMode>> = 
  (state: GameState, action: PayloadAction<GameMode>) => {
-  state.gameMode = action.payload;
+   state.gameMode = action.payload;
+   state.currentLevel = 0;
+   state.currentQuestion = '';
+   state.currentOptions = [];
+   state.correctAnswer = '';
+   state.correctAnswer = '';
+   state.score = {
+    correct: 0,
+    wrong: 0
+    }
 }
 
-const nextQuestion: CaseReducer<GameState, PayloadAction<string>> = 
-(state: GameState, action: PayloadAction<string>) => {
-  const answer = action.payload;
+const selectAnswer: CaseReducer<GameState, PayloadAction<string>> =
+ (state: GameState, action: PayloadAction<string>) => {
+  state.answerSelected = action.payload;
+}
 
-  answer === state.correctAnswer ? state.score.correct++ : state.score.wrong++;
-  state.currentLevel = state.currentLevel++;
-  state.currentQuestion = 'Define';
-  state.correctAnswer = 'Test';
-  state.currentOptions = ['A', 'B', 'C', 'D'];
+const nextQuestion: CaseReducer<GameState, PayloadAction<FetchGame>> = 
+(state: GameState, action: PayloadAction<FetchGame>) => {
+  const { answer, wrongAnswers } = action.payload;
+
+  if(state.currentLevel !== 0) {
+    state.answerSelected === state.correctAnswer ? state.score.correct++ : state.score.wrong++; 
+  }
+
+  state.currentLevel = state.currentLevel + 1;
+  state.currentQuestion = state.gameMode === 'guessByFlag' ? answer.name : answer.flag;
+  state.correctAnswer = answer.name;
+  state.currentOptions = wrongAnswers;
 }
 
 const gameSlice = createSlice({
@@ -34,7 +52,8 @@ const gameSlice = createSlice({
   initialState,
   reducers: {
     setStartGame,
-    nextQuestion
+    nextQuestion,
+    selectAnswer
   }
 });
 
