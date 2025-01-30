@@ -33,14 +33,14 @@ const selectAnswer: CaseReducer<GameState, PayloadAction<string>> =
   state.answerSelected = action.payload;
 }
 
+const updateScore: CaseReducer<GameState> = 
+  (state: GameState) => {
+  state.answerSelected === state.correctAnswer ? state.score.correct++ : state.score.wrong++; 
+}
+
 const nextQuestion: CaseReducer<GameState, PayloadAction<FetchGame>> = 
 (state: GameState, action: PayloadAction<FetchGame>) => {
   const { answer, wrongAnswers } = action.payload;
-
-  if(state.currentLevel !== 0) {
-    state.answerSelected === state.correctAnswer ? state.score.correct++ : state.score.wrong++; 
-  }
-
   state.currentLevel = state.currentLevel + 1;
   state.currentQuestion = state.gameMode === 'guessByFlag' ? answer.name : answer.flag;
   state.correctAnswer = answer.name;
@@ -53,7 +53,8 @@ const gameSlice = createSlice({
   reducers: {
     setStartGame,
     nextQuestion,
-    selectAnswer
+    selectAnswer,
+    updateScore
   }
 });
 
