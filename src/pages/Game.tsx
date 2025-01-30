@@ -1,10 +1,18 @@
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
 import useRequest from '../helpers/fetch';
 import { FetchGame, RootState } from '../interface/store';
 import { gameActions } from '../store/gameSlice';
 
 const Game = () => {
 
+  useEffect(() => {
+    dispatch(gameActions.setStartGame('guessByName'));
+    sendRequestHandler();
+  }, []);
+
+  const navigate = useNavigate();
   const { sendRequest } = useRequest();
   const game = useSelector((state: RootState) => state.game);
   const dispatch = useDispatch();
@@ -21,6 +29,16 @@ const Game = () => {
     dispatch(gameActions.selectAnswer(option));
   }
 
+  const nextQuestionHandler = () => {
+    dispatch(gameActions.updateScore());
+
+    if(game.currentLevel === 10) {
+      navigate('/game-over');
+    } else {
+      sendRequestHandler();
+    }
+  }
+
   const answersMap = game.currentOptions.map(({ flag, name }) => 
     (
       <li key={name}>
@@ -35,14 +53,8 @@ const Game = () => {
     )
   );
 
-  const handleGameStart = () => {
-    dispatch(gameActions.setStartGame('guessByName'));
-    sendRequestHandler();
-  }
-
   return (
     <section>
-      <button onClick={handleGameStart}>Start game</button>
       <br />
       <br />
       <br />
@@ -51,7 +63,7 @@ const Game = () => {
       <ul>
         { answersMap }
       </ul>
-      <button onClick={sendRequestHandler}>Next</button>
+      <button onClick={nextQuestionHandler}>Next</button>
     </section>
   )
 }
