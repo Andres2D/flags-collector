@@ -5,15 +5,13 @@ export interface RootState {
 export interface GameState {
   gameMode: GameMode;
   currentLevel: number;
-  currentQuestion: string;
-  currentOptions: {flag: string; name: string}[];
-  correctAnswer: string;
-  answerSelected: string;
+  game: FetchGame[];
   score: {
     correct: number;
     wrong: number;
   }
 }
+
 
 export type GameMode = 
 'guessByName' | 
@@ -24,7 +22,7 @@ export type GameMode =
 
 export interface FetchGame {
   answer: OptionFlag,
-  wrongAnswers: OptionFlag[]
+  options: OptionFlag[]
 }
 
 interface OptionFlag {

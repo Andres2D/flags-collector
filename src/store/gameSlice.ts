@@ -4,47 +4,34 @@ import { FetchGame, GameMode, GameState } from "../interface/store";
 const initialState: GameState = {
   gameMode: 'guessByName',
   currentLevel: 0,
-  currentQuestion: '',
-  currentOptions: [],
-  correctAnswer: '',
-  answerSelected: '',
+  game: [],
   score: {
     correct: 0,
     wrong: 0
   }
 };
 
-const setStartGame: CaseReducer<GameState, PayloadAction<GameMode>> = 
- (state: GameState, action: PayloadAction<GameMode>) => {
-   state.gameMode = action.payload;
-   state.currentLevel = 0;
-   state.currentQuestion = '';
-   state.currentOptions = [];
-   state.correctAnswer = '';
-   state.correctAnswer = '';
-   state.score = {
+const setStartGame: CaseReducer<GameState, PayloadAction<{gameMode: GameMode, data: FetchGame[]}>> = 
+ (state: GameState, action: PayloadAction<{gameMode: GameMode, data: FetchGame[]}>) => {
+  const { gameMode, data } = action.payload; 
+  state.gameMode = gameMode;
+  state.currentLevel = 1;
+  state.game = data;
+  state.score = {
     correct: 0,
     wrong: 0
-    }
+  }
 }
 
-const selectAnswer: CaseReducer<GameState, PayloadAction<string>> =
- (state: GameState, action: PayloadAction<string>) => {
-  state.answerSelected = action.payload;
+const updateScore: CaseReducer<GameState, PayloadAction<string>> = 
+  (state: GameState, action: PayloadAction<string>) => {
+  const currentGame = state.game[state.currentLevel - 1];
+  action.payload === currentGame.answer.name ? state.score.correct++ : state.score.wrong++; 
 }
 
-const updateScore: CaseReducer<GameState> = 
-  (state: GameState) => {
-  state.answerSelected === state.correctAnswer ? state.score.correct++ : state.score.wrong++; 
-}
-
-const nextQuestion: CaseReducer<GameState, PayloadAction<FetchGame>> = 
-(state: GameState, action: PayloadAction<FetchGame>) => {
-  const { answer, wrongAnswers } = action.payload;
+const nextQuestion: CaseReducer<GameState> = 
+(state: GameState) => {
   state.currentLevel = state.currentLevel + 1;
-  state.currentQuestion = state.gameMode === 'guessByFlag' ? answer.name : answer.flag;
-  state.correctAnswer = answer.name;
-  state.currentOptions = wrongAnswers;
 }
 
 const gameSlice = createSlice({
@@ -53,7 +40,6 @@ const gameSlice = createSlice({
   reducers: {
     setStartGame,
     nextQuestion,
-    selectAnswer,
     updateScore
   }
 });

@@ -37,29 +37,43 @@ const useRequest = () => {
 };
 
 const mapApiResults = (results: any[]) => {
-  const randomPositions = getUniqueRandom(4, results.length);
-  const answerCountry = results[randomPositions[0]];
-  const otherCountries = [
-    results[randomPositions[0]],
-    results[randomPositions[1]], 
-    results[randomPositions[2]], 
-    results[randomPositions[3]]
-  ];
 
-  const scrambledArray = scrambleArray(otherCountries);
+  const copyResults = JSON.parse(JSON.stringify(results));
+  const resultArray: any[] = [];
 
-  return {
-    answer: {
-      name: answerCountry?.name?.common,  
-      flag: answerCountry?.flags?.png
-    },
-    wrongAnswers: scrambledArray.map(country => {
-      return {
-        name: country?.name?.common,
-        flag: country?.flags?.png
-      }
-    })
+  for (let i = 0; i < 10; i++) {
+    const randomPositions = getUniqueRandom(4, copyResults.length);
+    const answerCountry = copyResults[randomPositions[0]];
+    const otherCountries = [
+      copyResults[randomPositions[0]],
+      copyResults[randomPositions[1]], 
+      copyResults[randomPositions[2]], 
+      copyResults[randomPositions[3]]
+    ];
+  
+    const scrambledArray = scrambleArray(otherCountries);
+  
+    resultArray.push({
+      answer: {
+        name: answerCountry?.name?.common,  
+        flag: answerCountry?.flags?.png
+      },
+      options: scrambledArray.map(country => {
+        return {
+          name: country?.name?.common,
+          flag: country?.flags?.png
+        }
+      })
+    });
+
+    copyResults.splice(randomPositions[0], 1);
+    copyResults.splice(randomPositions[1], 1);
+    copyResults.splice(randomPositions[2], 1);
+    copyResults.splice(randomPositions[3], 1);
+
   }
+  
+  return resultArray;
 }
 
 export const scrambleArray = (array: any[]) => {

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import useRequest from '../helpers/fetch';
@@ -8,38 +8,30 @@ import { gameActions } from '../store/gameSlice';
 const Game = () => {
 
   useEffect(() => {
-    dispatch(gameActions.setStartGame('guessByName'));
-    sendRequestHandler();
+    sendRequest('europe', (data: FetchGame[]) => dispatch(gameActions.setStartGame({ gameMode: 'guessByName', data})));
   }, []);
 
   const navigate = useNavigate();
+  const [ optionSelected, setOptionSelected ] = useState<string>('');
   const { sendRequest } = useRequest();
   const game = useSelector((state: RootState) => state.game);
   const dispatch = useDispatch();
-
-  const dispatchTest = (data: FetchGame) => {
-    dispatch(gameActions.nextQuestion(data));
-  }
-
-  const sendRequestHandler = () => {
-    sendRequest('europe', dispatchTest);
-  }
-
+  
   const handleOptionSelected = (option: string) => {
-    dispatch(gameActions.selectAnswer(option));
+    setOptionSelected(option);
   }
 
   const nextQuestionHandler = () => {
-    dispatch(gameActions.updateScore());
-
+    dispatch(gameActions.updateScore(optionSelected));
+    
     if(game.currentLevel === 10) {
       navigate('/game-over');
     } else {
-      sendRequestHandler();
+      dispatch(gameActions.nextQuestion());
     }
   }
 
-  const answersMap = game.currentOptions.map(({ flag, name }) => 
+  const answersMap = game?.game[game?.currentLevel - 1]?.options.map(({ flag, name }) => 
     (
       <li key={name}>
         <img 
@@ -47,7 +39,7 @@ const Game = () => {
           width="100px" 
           height="70px"
           src={flag} 
-          style={{ border: '2px solid black', cursor: 'pointer', borderColor: game.answerSelected === name ? 'red' : 'black' }} 
+          style={{ border: '2px solid black', cursor: 'pointer', borderColor: optionSelected === name ? 'red' : 'black' }} 
         />
       </li>
     )
@@ -59,7 +51,7 @@ const Game = () => {
       <br />
       <br />
       <p>Question : {game.currentLevel}/10</p>
-      <h3>{game.correctAnswer}</h3>
+      <h3>{game?.game[game?.currentLevel - 1]?.answer.name}</h3>
       <ul>
         { answersMap }
       </ul>
