@@ -12,13 +12,13 @@ function Menu() {
           onClick={() => navigate('/guess-by-name')}  
         >Guess by Name</button>
         <button
-          onClick={() => navigate('/guess-by-name')}  
+          onClick={() => navigate('/guess-by-flag')}  
         >Guess by Flag</button>
         <button
-          onClick={() => navigate('/guess-by-name')}  
+          onClick={() => navigate('/')}  
         >Color the Flag</button>
         <button
-          onClick={() => navigate('/guess-by-name')}  
+          onClick={() => navigate('/')}  
         >Guess By Map</button>
         <button
           onClick={() => navigate('/guess-by-name')}  
