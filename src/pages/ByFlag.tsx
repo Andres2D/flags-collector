@@ -5,7 +5,7 @@ import useRequest from '../helpers/fetch';
 import { FetchGame, RootState } from '../interface/store';
 import { gameActions } from '../store/gameSlice';
 
-const ByName = () => {
+const ByFlag = () => {
 
   useEffect(() => {
     sendRequest((data: FetchGame[]) => dispatch(gameActions.setStartGame({ gameMode: 'guessByName', data})));
@@ -32,17 +32,15 @@ const ByName = () => {
     setOptionSelected('');
   }
 
-  const answersMap = game?.game[game?.currentLevel - 1]?.options.map(({ flag, name }) => 
+  const answersMap = game?.game[game?.currentLevel - 1]?.options.map(({ name }) => 
     (
-      <li key={name}>
-        <img 
-          onClick={() => handleOptionSelected(name)}
-          width="100px" 
-          height="70px"
-          src={flag} 
-          style={{ border: '2px solid black', cursor: 'pointer', borderColor: optionSelected === name ? 'red' : 'black' }} 
-        />
-      </li>
+      <button 
+        key={name} 
+        style={{ borderColor: optionSelected === name ? 'red' : 'black' }}
+        onClick={() => handleOptionSelected(name)}
+      >
+        {name}
+      </button>
     )
   );
 
@@ -52,13 +50,18 @@ const ByName = () => {
       <br />
       <br />
       <p>Question : {game.currentLevel}/10</p>
-      <h3>{game?.game[game?.currentLevel - 1]?.answer.name}</h3>
-      <ul>
+      <img
+        width="100px" 
+        height="70px"
+        src={game?.game[game?.currentLevel - 1]?.answer.flag} 
+        style={{ border: '2px solid black' }} 
+      />
+      <div style={{ display: 'flex', gap: '10px', marginBottom: '30px' }}>
         { answersMap }
-      </ul>
+      </div>
       <button disabled={optionSelected === ''} onClick={nextQuestionHandler}>Next</button>
     </section>
   )
 }
 
-export default ByName;
+export default ByFlag;
