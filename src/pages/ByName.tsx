@@ -25,11 +25,11 @@ const ByName = () => {
     dispatch(gameActions.updateScore(optionSelected));
     
     if(game.currentLevel === 10) {
-      setOptionSelected('');
       navigate('/game-over');
     } else {
       dispatch(gameActions.nextQuestion());
     }
+    setOptionSelected('');
   }
 
   const answersMap = game?.game[game?.currentLevel - 1]?.options.map(({ flag, name }) => 
@@ -56,7 +56,7 @@ const ByName = () => {
       <ul>
         { answersMap }
       </ul>
-      <button onClick={nextQuestionHandler}>Next</button>
+      <button disabled={optionSelected === ''} onClick={nextQuestionHandler}>Next</button>
     </section>
   )
 }
