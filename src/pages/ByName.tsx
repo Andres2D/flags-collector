@@ -5,10 +5,10 @@ import useRequest from '../helpers/fetch';
 import { FetchGame, RootState } from '../interface/store';
 import { gameActions } from '../store/gameSlice';
 
-const Game = () => {
+const ByName = () => {
 
   useEffect(() => {
-    sendRequest('europe', (data: FetchGame[]) => dispatch(gameActions.setStartGame({ gameMode: 'guessByName', data})));
+    sendRequest((data: FetchGame[]) => dispatch(gameActions.setStartGame({ gameMode: 'guessByName', data})));
   }, []);
 
   const navigate = useNavigate();
@@ -25,6 +25,7 @@ const Game = () => {
     dispatch(gameActions.updateScore(optionSelected));
     
     if(game.currentLevel === 10) {
+      setOptionSelected('');
       navigate('/game-over');
     } else {
       dispatch(gameActions.nextQuestion());
@@ -60,4 +61,4 @@ const Game = () => {
   )
 }
 
-export default Game;
+export default ByName;

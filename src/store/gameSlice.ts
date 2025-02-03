@@ -34,13 +34,19 @@ const nextQuestion: CaseReducer<GameState> =
   state.currentLevel = state.currentLevel + 1;
 }
 
+const setEndGame: CaseReducer<GameState> = 
+(state: GameState) => {
+  state = initialState;
+}
+
 const gameSlice = createSlice({
   name: 'game',
   initialState,
   reducers: {
     setStartGame,
     nextQuestion,
-    updateScore
+    updateScore,
+    setEndGame
   }
 });
 

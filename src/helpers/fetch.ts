@@ -9,12 +9,12 @@ const useRequest = () => {
   const [isLoading, setIslLoading] = useState(false);  
   const [error, setError] = useState<any>(null);  
 
-  const sendRequest = useCallback(async (region: string, applyResponse: any) => {
+  const sendRequest = useCallback(async (applyResponse: any) => {
     try {
       setError(null);
       setIslLoading(true);
 
-      const query = `${API_URL}/region/${region}`;
+      const query = `${API_URL}/all`;
       const response = await axios.get(query);
 
       if(response.status !== 200) {

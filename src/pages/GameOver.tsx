@@ -10,8 +10,8 @@ function GameOver() {
   const dispatch = useDispatch();
 
   const gameOver = () => {
-    dispatch(gameActions.setStartGame('guessByName'));
-    navigate('/')
+    dispatch(gameActions.setEndGame());
+    navigate('/');
   }
 
   return (
