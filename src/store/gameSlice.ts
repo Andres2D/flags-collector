@@ -1,5 +1,5 @@
 import { CaseReducer, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { FetchGame, GameMode, GameState } from "../interface/store";
+import { ColorsGame, FetchGame, GameMode, GameState, OptionFlag } from "../interface/store";
 
 const initialState: GameState = {
   gameMode: 'guessByName',
@@ -11,8 +11,8 @@ const initialState: GameState = {
   }
 };
 
-const setStartGame: CaseReducer<GameState, PayloadAction<{gameMode: GameMode, data: FetchGame[]}>> = 
- (state: GameState, action: PayloadAction<{gameMode: GameMode, data: FetchGame[]}>) => {
+const setStartGame: CaseReducer<GameState, PayloadAction<{gameMode: GameMode, data: FetchGame[] | ColorsGame[]}>> = 
+ (state: GameState, action: PayloadAction<{gameMode: GameMode, data: FetchGame[] | ColorsGame[]}>) => {
   const { gameMode, data } = action.payload; 
   state.gameMode = gameMode;
   state.currentLevel = 1;
@@ -26,7 +26,20 @@ const setStartGame: CaseReducer<GameState, PayloadAction<{gameMode: GameMode, da
 const updateScore: CaseReducer<GameState, PayloadAction<string>> = 
   (state: GameState, action: PayloadAction<string>) => {
   const currentGame = state.game[state.currentLevel - 1];
-  action.payload === currentGame.answer.name ? state.score.correct++ : state.score.wrong++; 
+  const gameAnswer = currentGame.answer as OptionFlag; 
+  action.payload === gameAnswer.name ? state.score.correct++ : state.score.wrong++; 
+}
+
+const updateColorsScore: CaseReducer<GameState, PayloadAction<string[]>> = 
+  (state: GameState, action: PayloadAction<string[]>) => {
+  const currentGame = state.game[state.currentLevel - 1];
+
+  if(JSON.stringify(currentGame.answer) === JSON.stringify(action.payload)) {
+    state.score.correct++;
+  } else {
+    state.score.wrong++;
+  }
+
 }
 
 const nextQuestion: CaseReducer<GameState> = 
@@ -46,7 +59,8 @@ const gameSlice = createSlice({
     setStartGame,
     nextQuestion,
     updateScore,
-    setEndGame
+    setEndGame,
+    updateColorsScore
   }
 });
 
