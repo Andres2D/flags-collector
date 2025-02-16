@@ -5,7 +5,7 @@ export interface RootState {
 export interface GameState {
   gameMode: GameMode;
   currentLevel: number;
-  game: FetchGame[];
+  game: FetchGame[] | ColorsGame[];
   score: {
     correct: number;
     wrong: number;
@@ -25,7 +25,14 @@ export interface FetchGame {
   options: OptionFlag[]
 }
 
-interface OptionFlag {
+export interface ColorsGame {
+  answer: string[];
+  options: string[];
+  countryName: string;
+  direction: 'vertical' | 'horizontal'
+}
+
+export interface OptionFlag {
   name: string;
   flag: string;
 }

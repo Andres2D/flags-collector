@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import useRequest from '../helpers/fetch';
-import { FetchGame, RootState } from '../interface/store';
+import { FetchGame, RootState, OptionFlag } from '../interface/store';
 import { gameActions } from '../store/gameSlice';
 
 const ByName = () => {
@@ -32,7 +32,8 @@ const ByName = () => {
     setOptionSelected('');
   }
 
-  const answersMap = game?.game[game?.currentLevel - 1]?.options.map(({ flag, name }) => 
+
+  const answersMap = (game?.game[game?.currentLevel - 1]?.options as OptionFlag[]).map(({ flag, name }) => 
     (
       <li key={name}>
         <img 
@@ -52,7 +53,7 @@ const ByName = () => {
       <br />
       <br />
       <p>Question : {game.currentLevel}/10</p>
-      <h3>{game?.game[game?.currentLevel - 1]?.answer.name}</h3>
+      <h3>{(game?.game[game?.currentLevel - 1]?.answer as OptionFlag).name}</h3>
       <ul>
         { answersMap }
       </ul>

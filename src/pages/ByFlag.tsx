@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import useRequest from '../helpers/fetch';
-import { FetchGame, RootState } from '../interface/store';
+import { FetchGame, RootState, OptionFlag } from '../interface/store';
 import { gameActions } from '../store/gameSlice';
 
 const ByFlag = () => {
@@ -32,7 +32,8 @@ const ByFlag = () => {
     setOptionSelected('');
   }
 
-  const answersMap = game?.game[game?.currentLevel - 1]?.options.map(({ name }) => 
+  const optionsGame = game?.game[game?.currentLevel - 1]?.options as OptionFlag[];
+  const answersMap = optionsGame.map(({ name }) => 
     (
       <button 
         key={name} 
@@ -53,7 +54,7 @@ const ByFlag = () => {
       <img
         width="100px" 
         height="70px"
-        src={game?.game[game?.currentLevel - 1]?.answer.flag} 
+        src={(game?.game[game?.currentLevel - 1]?.answer as OptionFlag).flag} 
         style={{ border: '2px solid black' }} 
       />
       <div style={{ display: 'flex', gap: '10px', marginBottom: '30px' }}>
