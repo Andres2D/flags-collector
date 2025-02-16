@@ -15,7 +15,7 @@ function Menu() {
           onClick={() => navigate('/guess-by-flag')}  
         >Guess by Flag</button>
         <button
-          onClick={() => navigate('/')}  
+          onClick={() => navigate('/color-the-flag')}  
         >Color the Flag</button>
         <button
           onClick={() => navigate('/')}  

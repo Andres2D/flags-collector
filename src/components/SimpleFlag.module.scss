@@ -1,0 +1,37 @@
+
+.flag {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  .topCircle,
+  .center,
+  .bottomCircle {
+    border: 2px solid black;
+    cursor: pointer;
+  }
+}
+
+.horizontal {
+  .topCircle,
+  .center,
+  .bottomCircle {
+    width: 240px;
+    height: 60px;
+  }
+}
+
+.vertical {
+  flex-direction: row;
+  .topCircle,
+  .center,
+  .bottomCircle {
+    width: 70px;
+    height: 170px;
+  }
+}
+
+.double {
+  .bottomCircle {
+    display: none;
+  }
+}
