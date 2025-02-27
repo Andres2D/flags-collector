@@ -1,3 +1,11 @@
+import { 
+  canada,
+  france,
+  indonesia,
+  netherlands,
+  ukraine
+} from '../assets/flags';
+
 const getRealRandom = (maxLimit: number): number => {
   let byteArray = new Uint8Array(1);
   window.crypto.getRandomValues(byteArray);
@@ -14,4 +22,9 @@ export const getUniqueRandom = (count: number, maxLimit: number) => {
   }
 
   return Array.from(new Set(randoms));
+}
+
+export const getRandomFlag = () => {
+  const flagsArray = [canada, france, indonesia, netherlands, ukraine];
+  return flagsArray[getRealRandom(flagsArray.length - 1)];
 }
