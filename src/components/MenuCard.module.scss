@@ -1,0 +1,67 @@
+.card {
+  --border-radius: 0.75rem;
+  --primary-color: #7257fa;
+  --secondary-color: #3c3852;
+  width: 210px;
+  padding: 1rem;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  background: #f1f1f3;
+  box-shadow: 0px 8px 16px 0px rgb(0 0 0 / 3%);
+  position: relative;
+
+  .cardContent {
+    color: var(--secondary-color);
+    font-size: 0.86rem;
+  }
+
+  .cardTitle {
+    padding: 0;
+    font-size: 1.3rem;
+    font-weight: bold;
+    letter-spacing: -2px;
+  }
+
+  .cardInfo {
+    color: #6e6b80;
+    font-size: 0.8rem;
+    letter-spacing: -1px;
+  }
+
+  .cardArrow {
+    position: absolute;
+    background: var(--primary-color);
+    padding: 0.4rem;
+    border-top-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+    bottom: 0;
+    right: 0;
+    transition: 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  svg {
+    transition: 0.2s;
+  }
+
+  &:hover {
+    .cardTitle {
+      color: var(--primary-color);
+      text-decoration: underline;
+    }
+
+    .cardArrow {
+      background: #111;
+
+      svg {
+        transform: translateX(3px);
+      }
+    }
+  }
+}
+
+.card > * + * {
+  margin-top: 1.1em;
+}
