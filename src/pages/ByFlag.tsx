@@ -32,6 +32,10 @@ const ByFlag = () => {
     setOptionSelected('');
   }
 
+  if(!game?.game[game?.currentLevel - 1]) {
+    return <p>Loading...</p>
+  }
+
   const optionsGame = game?.game[game?.currentLevel - 1]?.options as OptionFlag[];
   const answersMap = optionsGame.map(({ name }) => 
     (
