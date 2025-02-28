@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import useRequest from '../helpers/fetch';
 import { FetchGame, RootState, OptionFlag } from '../interface/store';
 import { gameActions } from '../store/gameSlice';
+import styles from './ByName.module.scss';
 
 const ByName = () => {
 
@@ -38,29 +39,36 @@ const ByName = () => {
 
   const answersMap = (game?.game[game?.currentLevel - 1]?.options as OptionFlag[]).map(({ flag, name }) => 
     (
-      <li key={name}>
+      <li 
+        className={`${styles.flag} ${optionSelected === name 
+            ? styles.selected : 
+            (optionSelected === '' ? '' : styles.notSelected)}`
+          } 
+        key={name}>
         <img 
           onClick={() => handleOptionSelected(name)}
           width="100px" 
           height="70px"
           src={flag} 
-          style={{ border: '2px solid black', cursor: 'pointer', borderColor: optionSelected === name ? 'red' : 'black' }} 
         />
       </li>
     )
   );
 
   return (
-    <section>
-      <br />
-      <br />
-      <br />
-      <p>Question : {game.currentLevel}/10</p>
-      <h3>{(game?.game[game?.currentLevel - 1]?.answer as OptionFlag).name}</h3>
-      <ul>
+    <section className={styles.game}>
+      <h4>{game.currentLevel}/10</h4>
+      <h2>{(game?.game[game?.currentLevel - 1]?.answer as OptionFlag).name}</h2>
+      <ul className={styles.selection}>
         { answersMap }
       </ul>
-      <button disabled={optionSelected === ''} onClick={nextQuestionHandler}>Next</button>
+      <button 
+        disabled={optionSelected === ''} 
+        onClick={nextQuestionHandler}
+        className={styles.nextBtn}
+      >
+          Next
+      </button>
     </section>
   )
 }
