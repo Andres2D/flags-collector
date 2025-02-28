@@ -12,6 +12,7 @@ function Menu() {
       key={id}
       title={title}
       description={description}
+      isAvailable={isAvailable}
       clickAction={() => navigate(screen)}
     />
   )

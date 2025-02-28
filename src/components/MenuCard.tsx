@@ -9,9 +9,15 @@ type Props = {
 
 const MenuCard = ({ title, description, clickAction, isAvailable = true }: Props) => {
   
+  const handleCardClick = () => {
+    if(isAvailable) {
+      clickAction()
+    }
+  }
+
   return (
-    <div className={styles.card} onClick={(() => clickAction())}>
-      <h3 className={styles.cardTitle}>{ title }</h3>
+    <div className={styles.card} onClick={handleCardClick}>
+      <h3 className={`${styles.cardTitle} ${!isAvailable ? styles.titleDisabled : ''}`}>{ title }</h3>
       <p className={styles.cardContent}>
         { description }
       </p>
@@ -19,7 +25,7 @@ const MenuCard = ({ title, description, clickAction, isAvailable = true }: Props
         !isAvailable && 
         <div className={styles.cardInfo}>Work in progress</div>
       }
-      <div className={styles.cardArrow}>
+      <div className={`${styles.cardArrow} ${!isAvailable ? styles.disabledCardArrow : ''}`}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

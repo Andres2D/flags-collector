@@ -1,9 +1,11 @@
 import { 
   canada,
   france,
-  indonesia,
   netherlands,
-  ukraine
+  ukraine,
+  colombia,
+  brazil,
+  spain
 } from '../assets/flags';
 
 const getRealRandom = (maxLimit: number): number => {
@@ -25,6 +27,6 @@ export const getUniqueRandom = (count: number, maxLimit: number) => {
 }
 
 export const getRandomFlag = () => {
-  const flagsArray = [canada, france, indonesia, netherlands, ukraine];
+  const flagsArray = [canada, france, netherlands, ukraine, colombia, brazil, spain];
   return flagsArray[getRealRandom(flagsArray.length - 1)];
 }
