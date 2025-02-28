@@ -25,14 +25,14 @@ export const getColorGame = (): ColorsGame[] => {
 };
 
 
-const getRandomHexColors = (quantity: number): string[] => {
-  const colors: string[] = [];
-  Array.from({ length: quantity}).forEach(() => {
-    let output = '';
-    for (let i = 0; i < 5; ++i) {
-      output += (Math.floor(Math.random() * 16)).toString(16);
-    }
-    colors.push(`#${output}`);
-  });
-  return colors;
-}
+// const getRandomHexColors = (quantity: number): string[] => {
+//   const colors: string[] = [];
+//   Array.from({ length: quantity}).forEach(() => {
+//     let output = '';
+//     for (let i = 0; i < 5; ++i) {
+//       output += (Math.floor(Math.random() * 16)).toString(16);
+//     }
+//     colors.push(`#${output}`);
+//   });
+//   return colors;
+// }

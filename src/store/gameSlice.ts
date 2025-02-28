@@ -48,8 +48,8 @@ const nextQuestion: CaseReducer<GameState> =
 }
 
 const setEndGame: CaseReducer<GameState> = 
-(state: GameState) => {
-  state = initialState;
+(_state: GameState) => {
+  _state = initialState;
 }
 
 const gameSlice = createSlice({
