@@ -4,6 +4,7 @@ import MenuCard from '../components/MenuCard';
 import { gameModes } from "../constants/game-modes";
 
 function Menu() {
+
   const navigate = useNavigate();
 
   const gameModesMap = gameModes.map(({ id, title, description, isAvailable, screen }) => 

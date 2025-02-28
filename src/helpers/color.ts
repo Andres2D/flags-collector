@@ -7,7 +7,12 @@ export const getColorGame = (): ColorsGame[] => {
   const indexes = getUniqueRandom(10, 86);
   let gameData: ColorsGame[] = [];
   const game = indexes.map((index) => colorsDataBase[index]);
+  
   gameData = game.map(country => {
+    if(!country) {
+      console.log('Error data: ', game);
+    }
+
     return {
       answer: country.colors,
       options: scrambleArray(country.colors),

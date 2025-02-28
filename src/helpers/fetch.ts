@@ -77,14 +77,15 @@ const mapApiResults = (results: any[]) => {
 }
 
 export const scrambleArray = (array: any[]) => {
-  let currentIndex = array.length, randomIndex;
+  let currentIndex = array.length;
+  let resultArray = [...array];
   while(currentIndex !== 0) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
+    const randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
 
-    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    [resultArray[currentIndex], resultArray[randomIndex]] = [resultArray[randomIndex], resultArray[currentIndex]];
   }
-  return array;
+  return resultArray;
 };
 
 export default useRequest;

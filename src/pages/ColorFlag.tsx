@@ -7,6 +7,7 @@ import { getColorGame } from '../helpers/color';
 import { scrambleArray } from '../helpers/fetch';
 import { RootState, ColorsGame } from '../interface/store';
 import { gameActions } from '../store/gameSlice';
+import styles from './ColorFlag.module.scss';
 
 const ColorFlag = () => {
   useEffect(() => {
@@ -27,10 +28,18 @@ const ColorFlag = () => {
   }
 
   const mapColors = Array.from(new Set(currentQuestion.options)).map((color, index) => 
-    <ColorPicker key={index} onClick={() => setSelectedColor(color)} color={color} />
+    <ColorPicker 
+      key={index} 
+      onClick={() => setSelectedColor(color)} 
+      color={color} 
+    />
   );
 
   const nextQuestionHandler = () => {
+    if(colorOrder.length !== currentQuestion.answer.length) {
+      return;
+    }
+
     dispatch(gameActions.updateColorsScore(colorOrder));
     
     if(game.currentLevel === 10) {
@@ -51,12 +60,9 @@ const ColorFlag = () => {
   }
 
   return (
-    <section>
-      <br />
-      <br />
-      <br />
-      <p>Question : {game.currentLevel}/10</p>
-      <h3>{currentQuestion.countryName}</h3>
+    <section className={styles.game}>
+      <h4>{game.currentLevel}/10</h4>
+      <h2>{currentQuestion.countryName}</h2>
       <SimpleFlag 
         selectedColor={selectedColor} 
         isDouble={currentQuestion.options.length == 2 ? true : false}
@@ -64,10 +70,15 @@ const ColorFlag = () => {
         onPlaceColor={handleColorPlaced}
         reset={resetGame}
       />
-      <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+      <div className={styles.colorPalette} style={{  }}>
         {mapColors}
-      </div>   
-      <button disabled={false} onClick={nextQuestionHandler}>Next</button>
+      </div> 
+      <button 
+        disabled={false} 
+        className={styles.nextBtn}
+        onClick={nextQuestionHandler}>
+          Next
+      </button>
     </section>
   )
 }

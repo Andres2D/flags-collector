@@ -28,6 +28,10 @@ const SimpleFlag = ({
   const [ thirdSectionColor, setThirdSectionColor ] = useState('#C5C5C5');
 
   const handleColorPlaced = (index: number, color: string) => {
+    if(color.trim() === '') {
+      return;
+    }
+
     if(index === 0) {
       setFirstSectionColor(color);
     } else if(index === 1) {
