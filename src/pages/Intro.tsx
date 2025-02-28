@@ -14,8 +14,9 @@ function Intro() {
         className={styles.flag}
       />
       <h1 className={styles.title}>
-        <p className={styles.subtitle}>Welcome  to</p>
+        <p className={styles.subtitle}>Welcome to</p>
         Flags Collector
+        <small className={styles.version}>[beta]</small>
       </h1>
       <button onClick={() => navigate('/menu')} className={styles.startBtn}>Start</button>
     </section>

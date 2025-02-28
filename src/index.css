@@ -3,3 +3,12 @@ body {
   font-optical-sizing: auto;
   font-style: normal;
 }
+
+footer {
+  text-align: center;
+  margin-top: 100px;
+}
+
+footer a {
+  color: black !important;
+}
