@@ -14,7 +14,7 @@ const useRequest = () => {
       setError(null);
       setIslLoading(true);
 
-      const query = `${API_URL}/all`;
+      const query = `${API_URL}/all?fields=name,flags`;
       const response = await axios.get(query);
 
       if(response.status !== 200) {
